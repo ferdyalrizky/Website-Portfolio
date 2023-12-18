@@ -9,7 +9,7 @@ pageTurnBtn.forEach((el, index) => {
         if (pageTurn.classList.contains('turn')) {
             pageTurn.classList.remove('turn');
             setTimeout(() => {
-                pageTurn.style.zIndex = 40 - index;
+                pageTurn.style.zIndex = 80 - index;
             }, 1000)
         }
         else {
