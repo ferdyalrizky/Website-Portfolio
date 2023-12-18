@@ -15,7 +15,7 @@ pageTurnBtn.forEach((el, index) => {
         else {
             pageTurn.classList.add('turn');
             setTimeout(() => {
-                pageTurn.style.zIndex = 20 + index;
+                pageTurn.style.zIndex = 40 + index;
             }, 1000)
         }
     }
@@ -88,7 +88,7 @@ pages.forEach((_, index) => {
 
         setTimeout(() => {
             reverseIndex();
-            pages[pageNumber].style.zIndex = 10 + index;
+            pages[pageNumber].style.zIndex = 20 + index;
         }, 1500)
     }, (index + 1) * 300 + 2200)
 })
