@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">54523978195-9cdhuvbvucqgvun3dgdnbrucusj5el0k.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">54523978195</string>
+    <string name="google_api_key" translatable="false">AIzaSyCelxjajH_5onWqHdXNQo9QaufMOroL760</string>
+    <string name="google_app_id" translatable="false">1:54523978195:android:d544db107e0277ad1acf26</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCelxjajH_5onWqHdXNQo9QaufMOroL760</string>
+    <string name="google_storage_bucket" translatable="false">fagetti-94a7e.appspot.com</string>
+    <string name="project_id" translatable="false">fagetti-94a7e</string>
+    <style name="LaunchTheme" parent="@android:style/Theme.Light.NoTitleBar">
+        
+        <item name="android:windowBackground">@drawable/launch_background</item>
+        <item name="android:forceDarkAllowed">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
+    <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">
+        <item name="android:windowBackground">?android:colorBackground</item>
+    </style>
+</resources>
