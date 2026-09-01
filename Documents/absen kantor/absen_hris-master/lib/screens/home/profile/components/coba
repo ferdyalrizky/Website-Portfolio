@@ -1,0 +1,243 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hris_v2/theme/colors/custom_theme.dart';
+import 'package:hris_v2/theme/colors/light_colors.dart';
+import 'package:hris_v2/utils/constant.dart';
+import 'package:hris_v2/widgets/dialog.dart';
+import 'package:hris_v2/widgets/profile_container.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../size_config.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import '../../../../widgets/custom_snackbar_content.dart';
+import '../../../../widgets/top_container.dart';
+
+import 'package:http/http.dart' as http;
+
+class ProfileBannerColumn extends StatefulWidget {
+  final String name;
+  final String jobTitle;
+  final String? photoUrl;
+  final String nip;
+  final String apiToken;
+  final String divisi;
+  final int kryId;
+  final Function onCallback;
+  const ProfileBannerColumn({
+    Key? key,
+    required this.name,
+    required this.jobTitle,
+    this.photoUrl,
+    required this.nip,
+    required this.onCallback,
+    required this.apiToken,
+    required this.kryId,
+    required this.divisi,
+  }) : super(key: key);
+
+  @override
+  State<ProfileBannerColumn> createState() => _ProfileBannerColumnState();
+}
+
+class _ProfileBannerColumnState extends State<ProfileBannerColumn> {
+  pickProfilePicture() async {
+    final GlobalKey<State> keyLoader = GlobalKey<State>();
+
+    final image = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 512,
+      maxHeight: 512,
+      imageQuality: 75,
+    );
+    if (image == null) return;
+
+    Dialogs.loading(context, keyLoader, "Proses...");
+
+    var header = {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer ${widget.apiToken}',
+    };
+    try {
+      var request = http.MultipartRequest(
+          'POST', Uri.parse('$API_URL/v2/updateProfilePicture/${widget.kryId}'))
+        ..headers.addAll(header);
+      request.files.add(await http.MultipartFile.fromPath('photo', image.path));
+      var response = await request.send();
+
+      if (response.statusCode == 201) {
+        var newUrlPath = await response.stream.bytesToString();
+        newUrlPath = newUrlPath.replaceAll("\\", "");
+        newUrlPath = newUrlPath.replaceAll("\"", "");
+        SharedPreferences pref = await SharedPreferences.getInstance();
+
+        await pref.setString("gambar", "asd");
+        await pref.setString("gambar", newUrlPath);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            content: CustomSnackbarContent(
+              title: "Success",
+              msg: "Berhasil ganti profile picture",
+              contentType: ContentType.success,
+            ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            content: CustomSnackbarContent(
+              title: "Error",
+              msg: "Gagal ganti profile picture",
+              contentType: ContentType.failure,
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('error $e');
+    }
+    widget.onCallback();
+    Navigator.of(keyLoader.currentContext!, rootNavigator: false).pop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double containerWidthAndHeight = 150;
+    return ProfileContainer(
+      padding: const EdgeInsets.only(top: 35),
+      height: getPropotionateScreenHeight(280),
+      width: SizeConfig.screenWidth,
+      // bottomLeftRadius: const Radius.circular(0),
+      // bottomRightRadius: const Radius.circular(0),
+      color: CustomTheme.kFagettiBlue,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          //Photo
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 45,
+                ),
+                Stack(
+                  children: [
+                    widget.photoUrl == null || widget.photoUrl == ""
+                        ? Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 0, color: Colors.white),
+                              boxShadow: [
+                                BoxShadow(
+                                    spreadRadius: 2,
+                                    blurRadius: 10,
+                                    color: Colors.black.withOpacity(0.1))
+                              ],
+                              color: LightColors.kFagettiBlue,
+                              shape: BoxShape.circle,
+                              image: const DecorationImage(
+                                image: AssetImage('assets/images/avatar.png'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                        : Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 0, color: Colors.white),
+                              boxShadow: [
+                                BoxShadow(
+                                    spreadRadius: 2,
+                                    blurRadius: 10,
+                                    color: Colors.black.withOpacity(0.1))
+                              ],
+                              color: LightColors.kFagettiBlue,
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                    '$API_URL_PROFILE_PICT/${widget.photoUrl}'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                    Positioned(
+                      bottom: 0.r,
+                      right: 0.r,
+                      child: Container(
+                        height: 36.h,
+                        width: 36.w,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(width: 4.w, color: Colors.white),
+                          color: Colors.white,
+                        ),
+                        child: GestureDetector(
+                          onTap: () {
+                            pickProfilePicture();
+                          },
+                          child: Icon(
+                            size: 26,
+                            Icons.camera_alt,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                //Name
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.name,
+                      style: GoogleFonts.epilogue(
+                        fontSize: 13.0.sp,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                      ),
+                    ),
+                    //NIP
+                    Text(
+                      widget.nip,
+                      style: TextStyle(
+                        fontSize: 12.0.sp,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Text(
+                      widget.divisi,
+                      style: TextStyle(
+                        fontSize: 12.0.sp,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      softWrap: true, // Menambahkan properti softWrap
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

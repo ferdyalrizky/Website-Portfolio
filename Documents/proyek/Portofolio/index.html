@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio - Mobile Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Modern CSS Variables - Dark Theme */
+        :root {
+            --bg-color: #0f172a; /* Slate 900 */
+            --card-bg: #1e293b; /* Slate 800 */
+            --text-main: #f8fafc; /* Slate 50 */
+            --text-muted: #94a3b8; /* Slate 400 */
+            --accent-1: #3b82f6; /* Blue 500 */
+            --accent-2: #8b5cf6; /* Violet 500 */
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Glassmorphism Navbar */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent-1), var(--accent-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        /* Modern Hamburger Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            height: 2px;
+            width: 25px;
+            background: var(--text-main);
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        /* Section Setup */
+        section {
+            padding: 6rem 5% 4rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(to right, #f8fafc, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+            gap: 3rem;
+            padding-top: 8rem;
+        }
+
+        .hero-content {
+            flex: 1.2;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content h1 span {
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            max-width: 90%;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 2.5rem;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            color: #fff;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+        }
+
+        .hero-img {
+            flex: 1;
+            position: relative;
+        }
+
+        .hero-img::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--accent-2);
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            z-index: -1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .hero-img img {
+            width: 100%;
+            max-width: 450px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Skills Section (Pills Design) */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .skill-pill {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .skill-pill:hover {
+            border-color: var(--accent-1);
+            color: var(--text-main);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Portfolio Section (Modern Cards) */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-img-wrapper {
+            overflow: hidden;
+            height: 220px;
+        }
+
+        .project-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-img {
+            transform: scale(1.05);
+        }
+
+        .project-info {
+            padding: 1.8rem;
+        }
+
+        .project-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .project-info p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .tech-stack span {
+            background: rgba(255,255,255,0.05);
+            padding: 0.4rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: var(--accent-1);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Contact Section */
+        .contact {
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg-color) 0%, var(--card-bg) 100%);
+            border-top: 1px solid var(--border-color);
+            border-radius: 40px 40px 0 0;
+            padding-bottom: 6rem;
+        }
+
+        .contact p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #0b1121;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(15, 23, 42, 0.95);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                gap: 2rem;
+                transform: translateY(-150%);
+                opacity: 0;
+                transition: all 0.4s ease;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding-top: 7rem;
+            }
+
+            .hero-content p {
+                margin: 0 auto 2rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-img::before {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">Dev.Portofolio</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#beranda">Beranda</a></li>
+                <li><a href="#keahlian">Keahlian</a></li>
+                <li><a href="#proyek">Proyek</a></li>
+                <li><a href="#kontak">Kontak</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero fade-in" id="beranda">
+        <div class="hero-content">
+            <div class="hero-tag">👋 Mobile App Developer</div>
+            <h1>Halo, Saya <br><span>[Nama Anda]</span></h1>
+            <p>Membangun aplikasi *mobile* berkinerja tinggi dengan antarmuka modern. Mengubah ide kompleks menjadi pengalaman pengguna yang luar biasa di iOS & Android.</p>
+            <a href="#proyek" class="btn">Lihat Karya Saya</a>
+        </div>
+        <div class="hero-img">
+            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80" alt="Setup Coding">
+        </div>
+    </section>
+
+    <section id="keahlian" class="fade-in">
+        <h2 class="section-title">Tech Stack</h2>
+        <div class="skills-container">
+            <div class="skill-pill">Flutter & Dart</div>
+            <div class="skill-pill">Kotlin / Android</div>
+            <div class="skill-pill">Swift / iOS</div>
+            <div class="skill-pill">React Native</div>
+            <div class="skill-pill">Python (Backend/Data)</div>
+            <div class="skill-pill">Firebase & Supabase</div>
+            <div class="skill-pill">MYSQL</div>
+            <div class="skill-pill">RESTful API</div>
+            <div class="skill-pill">Git / CI/CD</div>
+        </div>
+    </section>
+
+    <section id="proyek" class="fade-in">
+        <h2 class="section-title">Proyek Pilihan</h2>
+        <div class="portfolio-grid">
+            
+            <div class="project-card">
+    <!-- 1. Bungkus wrapper gambar dengan tag <a> -->
+    <!-- Tambahkan target="_blank" agar link terbuka di tab baru -->
+    <a href="https://url-proyek-kamu.com" target="_blank" rel="noopener noreferrer">
+        <div class="project-img-wrapper">
+            <!-- 2. Ganti link Unsplash dengan path gambar lokalmu -->
+            <img src="assets/gudang.png" alt="Proyek Gudang" class="project-img">
+        </div>
+    </a>
+    
+    <div class="project-info">
+        <!-- Opsional: Kamu juga bisa membuat judulnya bisa diklik -->
+        <h3>
+            <a href="https://github.com/ferdyalrizky/gudang" target="_blank">Aplikasi Sistem Gudang</a>
+        </h3>
+        <p>Aplikasi mobile untuk memantau inventaris dan menampilkan tren data dengan grafik interaktif secara real-time.</p>
+        <div class="tech-stack">
+            <span>Flutter</span>
+            <span>Dart</span>
+            <span>REST API</span>
+        </div>
+    </div>
+</div>
+
+            
+            <div class="project-card">
+    <a href="https://url-proyek-kamu.com" target="_blank" rel="noopener noreferrer">
+        <div class="project-img-wrapper">
+            <img src="assets/hris.jpeg" alt="Proyek HRIS" class="project-img">
+        </div>
+    </a>
+    
+    <div class="project-info">
+        <h3>
+            <a href="https://github.com/ferdyalrizky/absen_hris" target="_blank">Aplikasi Sistem HRIS</a>
+        </h3>
+        <p>Aplikasi mobile HRIS ntuk mengelola administrasi karyawan dan otomatisasi tugas HR secara praktis, mandiri (employee self-service), serta real-time.</p>
+        <div class="tech-stack">
+            <span>Flutter</span>
+            <span>Dart</span>
+            <span>REST API</span>
+            <span>Laravel</span>
+            <span>PHP</span>
+        </div>
+    </div>
+</div>
+
+        <div class="project-card">
+    <a href="https://url-proyek-kamu.com" target="_blank" rel="noopener noreferrer">
+        <div class="project-img-wrapper">
+            <img src="assets/kasir.jpeg" alt="Proyek Kasir" class="project-img">
+        </div>
+    </a>
+    
+    <div class="project-info">
+        <h3>
+            <a href="https://github.com/ferdyalrizky/kasir" target="_blank">Aplikasi Sistem Kasir</a>
+        </h3>
+        <p>Aplikasi kasir untuk toko kelontong dengan pemindai barcode cepat, manajemen harga grosir/eceran, dan pencatatan kerugian dan keuntungan</p>
+        <div class="tech-stack">
+            <span>Flutter</span>
+            <span>Dart</span>
+        </div>
+    </div>
+</div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Ferdy Al Rizky. Crafted with passion for Mobile Technology.</p>
+    </footer>
+
+    <script>
+        // Hamburger Menu Logic
+        const menuToggle = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            
+            // Animasi ikon hamburger menjadi X
+            const spans = menuToggle.querySelectorAll('span');
+            if(navLinks.classList.contains('active')){
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -8px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        // Close menu on link click (Mobile)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const spans = menuToggle.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+
+        // Scroll Animation Logic (Efek muncul saat di-scroll)
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>

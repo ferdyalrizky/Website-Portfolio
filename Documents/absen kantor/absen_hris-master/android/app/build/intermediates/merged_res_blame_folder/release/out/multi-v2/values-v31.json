@@ -1,0 +1,47 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.fagetti.ees.app-mergeReleaseResources-69:/values-v31/values-v31.xml",
+            "map": [
+                {
+                    "source": "/Users/user/.gradle/caches/transforms-3/6688a4eb036588e3513ed97e36648fa3/transformed/jetified-core-splashscreen-1.0.0/res/values-v31/values-v31.xml",
+                    "from": {
+                        "startLines": "2,9",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,473",
+                        "endLines": "8,13",
+                        "endColumns": "12,12",
+                        "endOffsets": "468,697"
+                    },
+                    "to": {
+                        "startLines": "11,18",
+                        "startColumns": "4,4",
+                        "startOffsets": "586,1004",
+                        "endLines": "17,22",
+                        "endColumns": "12,12",
+                        "endOffsets": "999,1228"
+                    }
+                },
+                {
+                    "source": "/Users/user/Documents/flutter/hris_fix/hris_v2/android/app/src/main/res/values-v31/styles.xml",
+                    "from": {
+                        "startLines": "3,15",
+                        "startColumns": "4,4",
+                        "startOffsets": "173,881",
+                        "endLines": "8,17",
+                        "endColumns": "12,12",
+                        "endOffsets": "530,1045"
+                    },
+                    "to": {
+                        "startLines": "2,8",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,417",
+                        "endLines": "7,10",
+                        "endColumns": "12,12",
+                        "endOffsets": "412,581"
+                    }
+                }
+            ]
+        }
+    ]
+}
